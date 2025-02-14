@@ -1,0 +1,59 @@
+Logic Javascrript:
+//Moule
+module.exports = (query) =>{
+     //filter button header
+     let buttondata = [
+        {
+          name:"Tất Cả Sản Phẩm",
+          value:"",
+          selected:"",
+        },
+        {
+          name:"Đang Hoạt Động",
+          value:"active",
+          selected:"",
+        },
+        {
+          name:"Dừng Hoạt Động",
+          value:"unactive",
+          selected:"",
+        }
+      ]
+    
+    if(query.status) {
+      const index = buttondata.findIndex(item => item.value == query.status);
+      buttondata[index].selected = "active";
+      } else {
+      const index = buttondata.findIndex(item => item.value === ""||item.value ===null);
+      buttondata[index].selected = "active";
+    }
+    return buttondata;
+}
+//
+//Status button
+    const filterButtonStatus = require("../../helpers/statusFiltet.js")
+    const buttondata = filterButtonStatus(req.query);
+//even javascrpit
+const button_filter = document.querySelectorAll(".btn-filter");
+
+button_filter.forEach((button)=>{
+    const url = new URL(window.location.href)
+    const value = button.getAttribute("value");
+    button.addEventListener("click",()=>{
+        
+        
+        if(value){
+            url.searchParams.set("status",value);
+        
+        }else{
+            url.searchParams.delete("status");
+        }
+        window.location.href = url.href
+        
+    })
+  
+
+})
+//html
+each buttondata in dataButtons
+                                    button( class =`btn btn-filter btn-sm m-2 btn-outline-success ${buttondata.selected}` value=`${buttondata.value}`) #{buttondata.name}
